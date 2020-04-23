@@ -19,13 +19,14 @@ parser.add_argument('--server', type=str, help='Hostname or IP of the iperf3 ser
 group = parser.add_mutually_exclusive_group(required=True)
 group.add_argument('--count', type=int, help='Number of times to run iperf3.')
 group.add_argument('--time', type=int, help='Stop after this number of seconds.')
+group.add_argument('--loop', action='store_true', help='Run indefinitely.')
 output_group = parser.add_mutually_exclusive_group(required=True)
 output_group.add_argument('--json', action='store_true', help='output JSON')
 output_group.add_argument('--csv', action='store_true', help='output csv')
 parser.add_argument('--write-header', action='store_true', default=False,
                     help='write header to csv file')
-parser.add_argument('--minmb', type=float, required=True, help='Minimum number of MBs to send.')
-parser.add_argument('--maxmb', type=float, required=True, help='Maximum number of MBs to send.')
+parser.add_argument('--minmb', type=float, default=0.1, help='Minimum number of MBs to send.')
+parser.add_argument('--maxmb', type=float, default=10, help='Maximum number of MBs to send.')
 
 def error(msg):
     '''print msg to stderr'''
