@@ -21,8 +21,8 @@ group.add_argument('--count', type=int, help='Number of times to run iperf3.')
 group.add_argument('--time', type=int, help='Stop after this number of seconds.')
 group.add_argument('--loop', action='store_true', help='Run indefinitely.')
 output_group = parser.add_mutually_exclusive_group(required=True)
-output_group.add_argument('--json', action='store_true', help='output JSON')
-output_group.add_argument('--csv', action='store_true', help='output csv')
+output_group.add_argument('--json', action='store_true', help='Output JSON.')
+output_group.add_argument('--csv', action='store_true', help='Output csv.')
 parser.add_argument('--write-header', action='store_true', default=False,
                     help='write header to csv file')
 parser.add_argument('--minmb', type=float, default=0.1, help='Minimum number of MBs to send.')
@@ -132,7 +132,7 @@ def main():
             if start == 0:
                 start = timestamp
             if args.json:
-                print(interval_dct)
+                print(json.dumps(interval_dct))
             elif args.csv:
                 if labels is None:
                     labels = list(interval_dct.keys())
