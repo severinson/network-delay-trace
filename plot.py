@@ -44,8 +44,13 @@ def load_df(pattern, utc_offset=None, min_hour=0, max_hour=24):
 
     return df
 
-def pdf_from_series(series, bins='fd'):
+def pdf_from_series(series, bins='log', base=1.01):
     '''Return the PDF of the data samples in the series.'''
+    if bins == 'log':
+        num = math.ceil(math.log(series.max() / series.min()) / math.log(base))
+        start = math.log(series.min()) / math.log(base)
+        stop = num
+        bins = np.logspace(start, num, base=base, num=num)
     pdf, bin_edges = np.histogram(series, bins=bins, density=True)
     pdf = np.insert(pdf, 0, 0)
     return pdf, bin_edges
@@ -78,7 +83,7 @@ def plot_distribution(df, type='ccdf', label=None, fit_distribution=True, plotf=
     elif type == 'ccdf':
         cdf, x = cdf_from_series(df['seconds'])
         y = 1-cdf
-    p = plotf(x, y, '.-', label=label)
+    p = plotf(x, y, '-', label=label)
     if fit_distribution:
         assert type == 'ccdf', 'not implemented'
         loc, scale = fit_exponential(df['seconds'])
