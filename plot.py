@@ -4,6 +4,7 @@ import argparse
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import tikzplotlib
 
 from glob import glob
 
@@ -131,6 +132,8 @@ def main():
     plt.ylabel('Pr(delay > t)')
     plt.grid()
     plt.legend()
+    tikzplotlib.clean_figure()
+    tikzplotlib.save('ccdf.tex')
     plt.show()
     return
 
